@@ -114,6 +114,10 @@ on post-fs-data
     mkdir /data/camera 0770 media camera
     mkdir /data/misc/camera 0770 camera camera
 
+    # Create netmgr log dir
+    mkdir /data/misc/netmgr 0770 radio radio
+    chmod 0770 /data/misc/netmgr
+
     # Create the directories used by CnE subsystem
     mkdir /data/connectivity 0771 system system
     chown system system /data/connectivity
