@@ -90,6 +90,7 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
+    libcameraface \
     libxml2 \
     Snap
 
