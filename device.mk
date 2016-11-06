@@ -250,6 +250,10 @@ PRODUCT_PACKAGES += \
     libshim_ril \
     libxml2
 
+# Virtual Reality
+PRODUCT_PACKAGES += \
+    vr.msm8996
+
 # Wifi
 PRODUCT_PACKAGES += \
     libwpa_client \
