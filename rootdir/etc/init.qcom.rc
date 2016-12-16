@@ -436,6 +436,11 @@ service fingerprintd /system/bin/fingerprintd
     group system input
     writepid /dev/cpuset/system-background/tasks
 
+service htcdcpd /system/bin/htcdcpd
+    class main
+    user root
+    group root
+
 service hvdcp_opti /system/bin/hvdcp_opti
     class main
     user root
