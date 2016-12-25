@@ -20,9 +20,6 @@
 
     <string name="screen_actions_title">Screen actions</string>
 
-    <string name="double_tap_enable_title">Double tap to wake device</string>
-    <string name="double_tap_enable_summary">Wake the device by double tapping on the screen</string>
-
     <string name="swipe_up_title">Swipe up</string>
     <string name="swipe_up_summary">Action when using the swipe up gesture</string>
 

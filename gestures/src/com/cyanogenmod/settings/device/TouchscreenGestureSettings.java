@@ -24,43 +24,15 @@ import android.provider.Settings;
 
 public class TouchscreenGestureSettings extends PreferenceActivity {
 
-    private static final String KEY_DOUBLE_TAP_ENABLE = "double_tap_enable_key";
-
-    private SwitchPreference mDoubleTapPreference;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.gesture_panel);
-
-        mDoubleTapPreference = (SwitchPreference) findPreference(KEY_DOUBLE_TAP_ENABLE);
-        mDoubleTapPreference.setChecked(isDoubleTapEnabled());
-        mDoubleTapPreference.setOnPreferenceChangeListener(mDoubleTapPrefListener);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         getListView().setPadding(0, 0, 0, 0);
     }
-
-    private boolean enableDoubleTap(boolean enable) {
-        return Settings.Secure.putInt(getContentResolver(),
-                Settings.Secure.DOUBLE_TAP_TO_WAKE, enable ? 1 : 0);
-    }
-
-    private boolean isDoubleTapEnabled() {
-        return Settings.Secure.getInt(getContentResolver(),
-                Settings.Secure.DOUBLE_TAP_TO_WAKE, 0) != 0;
-    }
-
-    private Preference.OnPreferenceChangeListener mDoubleTapPrefListener =
-            new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            boolean enable = (boolean) newValue;
-            return enableDoubleTap(enable);
-        }
-    };
 }

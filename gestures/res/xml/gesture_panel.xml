@@ -21,12 +21,6 @@
         android:key="screen_actions_key"
         android:title="@string/screen_actions_title" >
 
-        <SwitchPreference
-            android:key="double_tap_enable_key"
-            android:defaultValue="false"
-            android:title="@string/double_tap_enable_title"
-            android:summary="@string/double_tap_enable_summary" />
-
         <ListPreference
             android:key="swipe_up_action_key"
             android:defaultValue="0"
