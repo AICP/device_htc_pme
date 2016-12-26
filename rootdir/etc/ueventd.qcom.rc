@@ -34,7 +34,7 @@
 /dev/kgsl-2d0             0666   root       root
 /dev/kgsl-2d1             0666   root       root
 /dev/ion                  0664   system     system
-/dev/rtc0                 0600   system     system
+/dev/rtc0                 0660   system     system
 /dev/smd0                 0660   system     system
 /dev/smd4                 0660   system     system
 /dev/smd_cxm_qmi          0640   radio      radio
@@ -48,16 +48,15 @@
 /dev/rmnet_ctrl           0660   usb        usb
 /dev/dpl_ctrl             0660   usb        usb
 
-#permissions for CSVT
+# permissions for CSVT
 /dev/smd11                0660   radio      radio
 
-#permissions for CIQ
+# permissions for CIQ
 /dev/smd20                0660   system     system
 
 /dev/radio0               0640   system     system
 /dev/rfcomm0              0660   bluetooth  bluetooth
 /dev/ttyUSB0              0660   bluetooth  bluetooth
-/dev/radio_feedback       0660   radio      radio
 /dev/smdcntl0             0640   radio      radio
 /dev/smdcntl1             0640   radio      radio
 /dev/smdcntl2             0640   radio      radio
@@ -221,12 +220,21 @@
 /sys/devices/virtual/optical_sensors/lightsensor    ls_poll_delay  0660    input    system
 /sys/devices/virtual/input/input*                   poll           0660    input    system
 /sys/devices/virtual/input/input*                   pollrate_ms    0660    input    system
+/sys/devices/soc/78b7000.i2c/i2c-3/3-0020/input/input*    secure_touch         0440   system  drmrpc
+/sys/devices/soc/78b7000.i2c/i2c-3/3-0020/input/input*    secure_touch_enable  0660   system  drmrpc
+/sys/devices/soc/78b7000.i2c/i2c-3/3-0038/input/input*    secure_touch         0440   system  drmrpc
+/sys/devices/soc/78b7000.i2c/i2c-3/3-0038/input/input*    secure_touch_enable  0660   system  drmrpc
+/sys/devices/soc/78b7000.i2c/i2c-3/3-004b/input/input*    secure_touch         0440   system  drmrpc
+/sys/devices/soc/78b7000.i2c/i2c-3/3-004b/input/input*    secure_touch_enable  0660   system  drmrpc
+
+# laser sensor access
+/sys/devices/virtual/input/input*                   enable_ps_sensor 0660  system   system
+/sys/devices/virtual/input/input*                   set_delay_ms     0660  system   system
 
 # vm_bms
 /dev/vm_bms               0660   system     system
 /dev/battery_data         0660   system     system
 
-#nfc permissions
 /dev/pn544                0660    nfc         nfc
 
 # UIO devices
@@ -247,25 +255,22 @@
 /dev/qbt1000              0660   system     system
 /dev/htc_smi              0660   system     system
 
-#ImproveTouch device
+# ImproveTouch device
 /dev/hbtp_input           0660   system     system
 /dev/hbtp_vm              0660   system     system
 
-# Storage: for factory reset protection feature
-/dev/block/bootdevice/by-name/frp       0660   system     system
+# Add device block for FRP
+/dev/block/platform/soc/7464900.sdhci/by-name/frp       0600   system     system
 
-#FPC fingerprint
-/sys/devices/soc/soc:fp_fpc1155   pinctl_set        0200  system system
-/sys/devices/soc/soc:fp_fpc1155   spi_owner         0200  system system
-/sys/devices/soc/soc:fp_fpc1155   spi_prepare       0200  system system
-/sys/devices/soc/soc:fp_fpc1155   regulator_enable  0200  system system
-/sys/devices/soc/soc:fp_fpc1155   bus_lock          0200  system system
+# set the owner of partition control's block node to media and system for MFG disable camera feature.
+/dev/block/platform/soc/7464900.sdhci/by-name/control   0660    cameraserver   system
+
+# FPC fingerprint
 /sys/devices/soc/soc:fp_fpc1155   hw_reset          0200  system system
 /sys/devices/soc/soc:fp_fpc1155   wakeup_enable     0200  system system
-/sys/devices/soc/soc:fp_fpc1155   hw_reset          0200  system system
-/sys/devices/soc/soc:fp_fpc1155   clk_enable        0200  system system
+/sys/devices/soc/soc:fp_fpc1155   pinctl_set        0200  system system
 /sys/devices/soc/soc:fp_fpc1155   irq               0600  system system
 /sys/devices/soc/soc:fp_fpc1155   irq_count         0400  system system
+/sys/devices/soc/soc:fp_fpc1155   irq_gpio          0400  system system
 /sys/devices/soc/soc:fp_fpc1155   fp_disable_charge 0200  system system
 /sys/devices/soc/soc:fp_fpc1155   hal_footprint     0200  system system
-
