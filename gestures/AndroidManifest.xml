@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 
+    <protected-broadcast android:name="com.android.systemui.doze.pulse" />
+
     <application
         android:label="GestureHandler"
         android:persistent="true">
