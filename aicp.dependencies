@@ -33,5 +33,10 @@
     "repository": "LineageOS/android_packages_apps_FlipFlap",
     "target_path": "packages/apps/FlipFlap",
     "branch": "cm-14.1"
+  },
+  {
+    "repository": "LineageOS/android_packages_resources_devicesettings",
+    "target_path": "packages/resources/devicesettings",
+    "branch": "cm-14.1"
   }
 ]
