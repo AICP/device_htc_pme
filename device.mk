@@ -271,6 +271,10 @@ PRODUCT_PACKAGES += \
     libshim_ril \
     libxml2
 
+# Tethering
+PRODUCT_PROPERTY_OVERRIDES += \
+    net.tethering.noprovisioning=true
+
 # Virtual Reality
 PRODUCT_PACKAGES += \
     vr.msm8996
