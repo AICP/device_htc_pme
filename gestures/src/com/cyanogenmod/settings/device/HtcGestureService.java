@@ -45,6 +45,8 @@ public class HtcGestureService extends Service {
 
     public static final String TAG = "GestureService";
 
+    private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
+
     private static final String KEY_SWIPE_UP = "swipe_up_action_key";
     private static final String KEY_SWIPE_DOWN = "swipe_down_action_key";
     private static final String KEY_SWIPE_LEFT = "swipe_left_action_key";
@@ -55,6 +57,7 @@ public class HtcGestureService extends Service {
     private static final int ACTION_NONE = 0;
     private static final int ACTION_CAMERA = 1;
     private static final int ACTION_TORCH = 2;
+    private static final int ACTION_DOZE = 3;
 
     private Context mContext;
     private GestureMotionSensor mGestureSensor;
@@ -184,10 +187,22 @@ public class HtcGestureService extends Service {
             case ACTION_TORCH:
                 handleFlashlightActivation();
                 break;
+            case ACTION_DOZE:
+                launchDozePulse();
+                onDisplayOn();
+                onDisplayOff();
+                break;
             case ACTION_NONE:
             default:
                 break;
         }
+    }
+
+    private void launchDozePulse() {
+        if (DEBUG) Log.d(TAG, "Launch doze pulse");
+        mSensorWakeLock.acquire(SENSOR_WAKELOCK_DURATION);
+        mContext.sendBroadcastAsUser(new Intent(DOZE_INTENT),
+                new UserHandle(UserHandle.USER_CURRENT));
     }
 
     private void handleCameraActivation() {

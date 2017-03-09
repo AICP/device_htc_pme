@@ -33,5 +33,6 @@
     <string name="action_none">Disable</string>
     <string name="action_launch_camera">Launch camera</string>
     <string name="action_torch">Toggle torch</string>
+    <string name="action_doze">Launch doze</string>
 
 </resources>
