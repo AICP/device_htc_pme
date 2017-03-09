@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
  * Copyright (C) 2014 SlimRoms Project
+ * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.cyanogenmod.settings.device;
+package com.cyanogenmod.settings.htc;
 
 import android.app.Service;
 import android.content.ActivityNotFoundException;
@@ -23,7 +24,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.hardware.SensorEvent;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraCharacteristics;
@@ -42,35 +42,20 @@ import android.util.Log;
 public class HtcGestureService extends Service {
 
     private static final boolean DEBUG = false;
-
     public static final String TAG = "GestureService";
 
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
 
-    private static final String KEY_SWIPE_UP = "swipe_up_action_key";
-    private static final String KEY_SWIPE_DOWN = "swipe_down_action_key";
-    private static final String KEY_SWIPE_LEFT = "swipe_left_action_key";
-    private static final String KEY_SWIPE_RIGHT = "swipe_right_action_key";
-
     private static final int SENSOR_WAKELOCK_DURATION = 200;
 
-    private static final int ACTION_NONE = 0;
-    private static final int ACTION_CAMERA = 1;
-    private static final int ACTION_TORCH = 2;
-    private static final int ACTION_DOZE = 3;
-
     private Context mContext;
+    private CameraManager mCameraManager;
     private GestureMotionSensor mGestureSensor;
     private PowerManager mPowerManager;
     private WakeLock mSensorWakeLock;
-    private CameraManager mCameraManager;
+
     private String mTorchCameraId;
     private boolean mTorchEnabled = false;
-
-    private int mSwipeUpAction;
-    private int mSwipeDownAction;
-    private int mSwipeLeftAction;
-    private int mSwipeRightAction;
 
     private GestureMotionSensor.GestureMotionSensorListener mListener =
         new GestureMotionSensor.GestureMotionSensorListener() {
@@ -98,15 +83,12 @@ public class HtcGestureService extends Service {
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
         super.onCreate();
-
         mContext = this;
         mGestureSensor = GestureMotionSensor.getInstance(mContext);
         mGestureSensor.registerListener(mListener);
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-        loadPreferences(sharedPrefs);
-        sharedPrefs.registerOnSharedPreferenceChangeListener(mPrefListener);
         mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        mSensorWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "HtcGestureWakeLock");
+        mSensorWakeLock = mPowerManager.newWakeLock(
+                PowerManager.PARTIAL_WAKE_LOCK, "HtcGestureWakeLock");
         mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
         mCameraManager.registerTorchCallback(mTorchCallback, null);
         mTorchCameraId = getTorchCameraId();
@@ -138,16 +120,16 @@ public class HtcGestureService extends Service {
         if (isDoubleTapEnabled()) {
             mGestureSensor.disableGesture(GestureMotionSensor.SENSOR_GESTURE_DOUBLE_TAP);
         }
-        if (mSwipeUpAction != ACTION_NONE) {
+        if (Constants.mSwipeUpAction != Constants.ACTION_NONE) {
             mGestureSensor.disableGesture(GestureMotionSensor.SENSOR_GESTURE_SWIPE_UP);
         }
-        if (mSwipeDownAction != ACTION_NONE) {
+        if (Constants.mSwipeDownAction != Constants.ACTION_NONE) {
             mGestureSensor.disableGesture(GestureMotionSensor.SENSOR_GESTURE_SWIPE_DOWN);
         }
-        if (mSwipeLeftAction != ACTION_NONE) {
+        if (Constants.mSwipeLeftAction != Constants.ACTION_NONE) {
             mGestureSensor.disableGesture(GestureMotionSensor.SENSOR_GESTURE_SWIPE_LEFT);
         }
-        if (mSwipeRightAction != ACTION_NONE) {
+        if (Constants.mSwipeRightAction != Constants.ACTION_NONE) {
             mGestureSensor.disableGesture(GestureMotionSensor.SENSOR_GESTURE_SWIPE_RIGHT);
         }
         mGestureSensor.stopListening();
@@ -158,46 +140,72 @@ public class HtcGestureService extends Service {
         if (isDoubleTapEnabled()) {
             mGestureSensor.enableGesture(GestureMotionSensor.SENSOR_GESTURE_DOUBLE_TAP);
         }
-        if (mSwipeUpAction != ACTION_NONE) {
+        if (Constants.mSwipeUpAction != Constants.ACTION_NONE) {
             mGestureSensor.enableGesture(GestureMotionSensor.SENSOR_GESTURE_SWIPE_UP);
         }
-        if (mSwipeDownAction != ACTION_NONE) {
+        if (Constants.mSwipeDownAction != Constants.ACTION_NONE) {
             mGestureSensor.enableGesture(GestureMotionSensor.SENSOR_GESTURE_SWIPE_DOWN);
         }
-        if (mSwipeLeftAction != ACTION_NONE) {
+        if (Constants.mSwipeLeftAction != Constants.ACTION_NONE) {
             mGestureSensor.enableGesture(GestureMotionSensor.SENSOR_GESTURE_SWIPE_LEFT);
         }
-        if (mSwipeRightAction != ACTION_NONE) {
+        if (Constants.mSwipeRightAction != Constants.ACTION_NONE) {
             mGestureSensor.enableGesture(GestureMotionSensor.SENSOR_GESTURE_SWIPE_RIGHT);
         }
         mGestureSensor.beginListening();
     }
 
-    private boolean isDoubleTapEnabled() {
-        return (Settings.Secure.getInt(mContext.getContentResolver(),
-                    Settings.Secure.DOUBLE_TAP_TO_WAKE, 0) != 0);
-    }
+    private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                onDisplayOff();
+            } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                onDisplayOn();
+            }
+        }
+    };
 
     private void handleGestureAction(int action) {
         if (DEBUG) Log.d(TAG, "Performing gesture action: " + action);
         switch (action) {
-            case ACTION_CAMERA:
+            case Constants.ACTION_CAMERA:
                 handleCameraActivation();
                 break;
-            case ACTION_TORCH:
+            case Constants.ACTION_TORCH:
                 handleFlashlightActivation();
                 onDisplayOn();
                 onDisplayOff();
                 break;
-            case ACTION_DOZE:
+            case Constants.ACTION_DOZE:
                 launchDozePulse();
                 onDisplayOn();
                 onDisplayOff();
                 break;
-            case ACTION_NONE:
+            case Constants.ACTION_NONE:
             default:
                 break;
         }
+    }
+
+    private int gestureToAction(int gesture) {
+        switch (gesture) {
+            case GestureMotionSensor.SENSOR_GESTURE_SWIPE_UP:
+                return Constants.mSwipeUpAction;
+            case GestureMotionSensor.SENSOR_GESTURE_SWIPE_DOWN:
+                return Constants.mSwipeDownAction;
+            case GestureMotionSensor.SENSOR_GESTURE_SWIPE_LEFT:
+                return Constants.mSwipeLeftAction;
+            case GestureMotionSensor.SENSOR_GESTURE_SWIPE_RIGHT:
+                return Constants.mSwipeRightAction;
+            default:
+                return -1;
+        }
+    }
+
+    private boolean isDoubleTapEnabled() {
+        return (Settings.Secure.getInt(mContext.getContentResolver(),
+                    Settings.Secure.DOUBLE_TAP_TO_WAKE, 0) != 0);
     }
 
     private void launchDozePulse() {
@@ -209,13 +217,13 @@ public class HtcGestureService extends Service {
 
     private void handleCameraActivation() {
         Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(500);
+        v.vibrate(400);
         launchCamera();
     }
 
     private void handleFlashlightActivation() {
         Vibrator v = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(500);
+        v.vibrate(400);
         launchFlashlight();
     }
 
@@ -270,71 +278,6 @@ public class HtcGestureService extends Service {
             if (!cameraId.equals(mTorchCameraId))
                 return;
             mTorchEnabled = false;
-        }
-    };
-
-    private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                onDisplayOff();
-            } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                onDisplayOn();
-            }
-        }
-    };
-
-    private int gestureToAction(int gesture) {
-        switch (gesture) {
-            case GestureMotionSensor.SENSOR_GESTURE_SWIPE_UP:
-                return mSwipeUpAction;
-            case GestureMotionSensor.SENSOR_GESTURE_SWIPE_DOWN:
-                return mSwipeDownAction;
-            case GestureMotionSensor.SENSOR_GESTURE_SWIPE_LEFT:
-                return mSwipeLeftAction;
-            case GestureMotionSensor.SENSOR_GESTURE_SWIPE_RIGHT:
-                return mSwipeRightAction;
-            default:
-                return -1;
-        }
-    }
-
-    private void loadPreferences(SharedPreferences sharedPreferences) {
-        try {
-            mSwipeUpAction = Integer.parseInt(sharedPreferences.getString(KEY_SWIPE_UP,
-                        Integer.toString(ACTION_NONE)));
-            mSwipeDownAction = Integer.parseInt(sharedPreferences.getString(KEY_SWIPE_DOWN,
-                        Integer.toString(ACTION_NONE)));
-            mSwipeLeftAction = Integer.parseInt(sharedPreferences.getString(KEY_SWIPE_LEFT,
-                    Integer.toString(ACTION_NONE)));
-            mSwipeRightAction = Integer.parseInt(sharedPreferences.getString(KEY_SWIPE_RIGHT,
-                        Integer.toString(ACTION_NONE)));
-        } catch (NumberFormatException e) {
-            Log.e(TAG, "Error loading preferences");
-        }
-    }
-
-    private SharedPreferences.OnSharedPreferenceChangeListener mPrefListener =
-            new SharedPreferences.OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            try {
-                if (KEY_SWIPE_UP.equals(key)) {
-                    mSwipeUpAction = Integer.parseInt(sharedPreferences.getString(KEY_SWIPE_UP,
-                                Integer.toString(ACTION_NONE)));
-                } else if (KEY_SWIPE_DOWN.equals(key)) {
-                    mSwipeDownAction = Integer.parseInt(sharedPreferences.getString(KEY_SWIPE_DOWN,
-                                Integer.toString(ACTION_NONE)));
-                } else if (KEY_SWIPE_LEFT.equals(key)) {
-                    mSwipeLeftAction = Integer.parseInt(sharedPreferences.getString(KEY_SWIPE_LEFT,
-                                Integer.toString(ACTION_NONE)));
-                } else if (KEY_SWIPE_RIGHT.equals(key)) {
-                    mSwipeRightAction = Integer.parseInt(sharedPreferences.getString(KEY_SWIPE_RIGHT,
-                                Integer.toString(ACTION_NONE)));
-                }
-            } catch (NumberFormatException e) {
-                Log.e(TAG, "Error loading preferences");
-            }
         }
     };
 }

@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package com.cyanogenmod.settings.device;
+package com.cyanogenmod.settings.htc;
+
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;

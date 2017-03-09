@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.cyanogenmod.settings.device"
+      package="com.cyanogenmod.settings.htc"
       android:sharedUserId="android.uid.system">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+
 
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
@@ -12,7 +12,7 @@
         android:label="GestureHandler"
         android:persistent="true">
 
-        <receiver android:name="com.cyanogenmod.settings.device.BootCompletedReceiver">
+        <receiver android:name=".BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -20,7 +20,7 @@
         </receiver>
 
         <service
-            android:name="com.cyanogenmod.settings.device.HtcGestureService"
+            android:name=".HtcGestureService"
             android:permission="HtcGestureService">
         </service>
 
@@ -29,14 +29,8 @@
             android:label="@string/screen_gestures_panel_title"
             android:theme="@android:style/Theme.Material.Settings">
             <intent-filter>
-                <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
+                <action android:name="com.cyanogenmod.settings.htc.GESTURE_SETTINGS" />
             </intent-filter>
-            <meta-data
-                android:name="com.android.settings.category"
-                android:value="com.android.settings.category.device" />
-            <meta-data
-                android:name="com.android.settings.icon"
-                android:resource="@drawable/ic_settings_gestures" />
         </activity>
 
     </application>
