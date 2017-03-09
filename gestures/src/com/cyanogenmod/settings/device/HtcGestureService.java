@@ -186,6 +186,8 @@ public class HtcGestureService extends Service {
                 break;
             case ACTION_TORCH:
                 handleFlashlightActivation();
+                onDisplayOn();
+                onDisplayOff();
                 break;
             case ACTION_DOZE:
                 launchDozePulse();
@@ -232,7 +234,6 @@ public class HtcGestureService extends Service {
 
     private void launchFlashlight() {
         mSensorWakeLock.acquire(SENSOR_WAKELOCK_DURATION);
-        mPowerManager.wakeUp(SystemClock.uptimeMillis());
         try {
             mCameraManager.setTorchMode(mTorchCameraId, !mTorchEnabled);
         } catch (CameraAccessException e) {
