@@ -17,11 +17,7 @@
 package com.cyanogenmod.settings.device;
 
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.SwitchPreference;
-import android.provider.Settings;
-
 public class TouchscreenGestureSettings extends PreferenceActivity {
 
     @Override
