@@ -713,3 +713,11 @@ on property:vold.decrypt=trigger_restart_min_framework
 
 on property:vold.decrypt=trigger_restart_framework
     restart time_daemon
+
+on property:gsm.sim.operator.numeric=*
+    start op-prop
+
+service op-prop /system/bin/operator-properties
+    class main
+    disabled
+    oneshot
