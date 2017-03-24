@@ -46,7 +46,6 @@ public class TouchscreenGestureSettings extends PreferenceActivity {
         SharedPreferences sharedPrefs =
                 PreferenceManager.getDefaultSharedPreferences(this);
         sharedPrefs.registerOnSharedPreferenceChangeListener(mPrefListener);
-        loadPreferences(sharedPrefs);
 
         mSwipeUp = (ListPreference) prefSet.findPreference(Constants.KEY_SWIPE_UP);
         mSwipeUp.setSummary(mSwipeUp.getEntry());
@@ -74,21 +73,6 @@ public class TouchscreenGestureSettings extends PreferenceActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void loadPreferences(SharedPreferences sharedPreferences) {
-        try {
-            Constants.mSwipeUpAction = Integer.parseInt(sharedPreferences.getString(
-                    Constants.KEY_SWIPE_UP, Integer.toString(Constants.ACTION_NONE)));
-            Constants.mSwipeDownAction = Integer.parseInt(sharedPreferences.getString(
-                    Constants.KEY_SWIPE_DOWN, Integer.toString(Constants.ACTION_NONE)));
-            Constants.mSwipeLeftAction = Integer.parseInt(sharedPreferences.getString(
-                    Constants.KEY_SWIPE_LEFT, Integer.toString(Constants.ACTION_NONE)));
-            Constants.mSwipeRightAction = Integer.parseInt(sharedPreferences.getString(
-                    Constants.KEY_SWIPE_RIGHT, Integer.toString(Constants.ACTION_NONE)));
-        } catch (NumberFormatException e) {
-            Log.e(TAG, "Error loading preferences");
-        }
     }
 
     private SharedPreferences.OnSharedPreferenceChangeListener mPrefListener =

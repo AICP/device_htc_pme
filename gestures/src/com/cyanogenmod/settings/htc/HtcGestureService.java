@@ -24,6 +24,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.hardware.SensorEvent;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraCharacteristics;
@@ -92,6 +93,10 @@ public class HtcGestureService extends Service {
         mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
         mCameraManager.registerTorchCallback(mTorchCallback, null);
         mTorchCameraId = getTorchCameraId();
+
+        SharedPreferences sharedPrefs =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        loadPreferences(sharedPrefs);
     }
 
     @Override
@@ -280,4 +285,19 @@ public class HtcGestureService extends Service {
             mTorchEnabled = false;
         }
     };
+
+    private void loadPreferences(SharedPreferences sharedPreferences) {
+        try {
+            Constants.mSwipeUpAction = Integer.parseInt(sharedPreferences.getString(
+                    Constants.KEY_SWIPE_UP, Integer.toString(Constants.ACTION_NONE)));
+            Constants.mSwipeDownAction = Integer.parseInt(sharedPreferences.getString(
+                    Constants.KEY_SWIPE_DOWN, Integer.toString(Constants.ACTION_NONE)));
+            Constants.mSwipeLeftAction = Integer.parseInt(sharedPreferences.getString(
+                    Constants.KEY_SWIPE_LEFT, Integer.toString(Constants.ACTION_NONE)));
+            Constants.mSwipeRightAction = Integer.parseInt(sharedPreferences.getString(
+                    Constants.KEY_SWIPE_RIGHT, Integer.toString(Constants.ACTION_NONE)));
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "Error loading preferences");
+        }
+    }
 }
