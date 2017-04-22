@@ -869,7 +869,7 @@ bin/energy-awareness
 bin/iop
 bin/msm_irqbalance
 lib64/libqti-iop.so
-vendor/bin/perfd
+vendor/bin/perfd|dcb9dc3b552972110dab04339255ce2ebee9463e
 vendor/etc/perf-profile0.conf
 vendor/etc/perf-profile1.conf
 vendor/etc/perf-profile2.conf
