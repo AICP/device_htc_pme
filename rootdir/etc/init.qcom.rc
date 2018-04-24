@@ -445,7 +445,7 @@ service cnd /vendor/bin/cnd
     group system wifi inet radio wakelock net_admin
     writepid /dev/cpuset/system-background/tasks
 
-service hvdcp_opti /vendor/bin/hvdcp_opti
+service vendor.hvdcp_opti /vendor/bin/hvdcp_opti
     class main
     user root
     group root system wakelock

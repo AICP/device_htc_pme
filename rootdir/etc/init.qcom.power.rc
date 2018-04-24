@@ -185,4 +185,4 @@ on charger
     write /sys/module/lpm_levels/parameters/sleep_disabled 0
     wait /dev/block/bootdevice
     mount_all charger.fstab.qcom
-    start hvdcp_opti
+    start vendor.hvdcp_opti
