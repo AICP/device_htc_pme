@@ -13,7 +13,6 @@
 /dev/block/platform/soc/7464900.sdhci/by-name/dsp           /dsp               ext4    ro,nosuid,nodev,barrier=1					                                  wait
 /dev/block/platform/soc/7464900.sdhci/by-name/boot          /boot              emmc    defaults                                                                                          defaults
 /dev/block/platform/soc/7464900.sdhci/by-name/recovery      /recovery          emmc    defaults                                                                                          defaults
-/dev/block/platform/soc/7464900.sdhci/by-name/frp           /persistent        emmc    defaults                                                                                          defaults
 /dev/block/platform/soc/7464900.sdhci/by-name/misc          /misc              emmc    defaults                                                                                          defaults
 /dev/block/platform/soc/7464900.sdhci/by-name/adsp          /firmware/adsp     vfat    ro,uid=1000,gid=1000,fmask=0337,dmask=0227,shortname=lower					  wait
 /dev/block/platform/soc/7464900.sdhci/by-name/radio         /firmware/radio    vfat    ro,uid=1000,gid=1000,fmask=0337,dmask=0227,shortname=lower					  wait
