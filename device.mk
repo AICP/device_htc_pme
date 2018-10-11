@@ -89,6 +89,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml \
     $(LOCAL_PATH)/configs/com.htc.software.market.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/com.htc.software.market.xml \
     $(LOCAL_PATH)/configs/htcsenseframework.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/htcsenseframework.xml \
+    $(LOCAL_PATH)/configs/privapp-permissions-pmeaicp.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-pmeaicp.xml
 
 # Vendor properties
 -include $(LOCAL_PATH)/vendor_prop.mk

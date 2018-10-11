@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  //++[Feature][eyosen][2018/10/05][PackageManager] Add Privileged Permissions -->
+<permissions>
+
+  <!-- Additional LineageOS package permissions on top of privapp-permissions-platform.xml -->
+    <privapp-permissions package="com.aicp.extras">
+        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+    </privapp-permissions>
+
+</permissions>
+<!--  //~~[Feature][eyosen][[2018/10/05][PackageManager] Add Privileged Permissions -->
