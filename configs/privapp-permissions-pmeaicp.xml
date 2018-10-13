@@ -2,7 +2,14 @@
 <!--  //++[Feature][eyosen][2018/10/05][PackageManager] Add Privileged Permissions -->
 <permissions>
 
-  <!-- Additional LineageOS package permissions on top of privapp-permissions-platform.xml -->
+  <!-- Additional permissions on top of privapp-permissions-platform.xml -->
+    <privapp-permissions package="com.android.dialer">
+        <permission name="android.permission.INTERACT_ACROSS_USERS"/>
+        <permission name="android.permission.ACCESS_NETWORK_STATE"/>
+        <permission name="android.permission.ACCESS_FINE_LOCATION"/>
+    </privapp-permissions>
+
+  <!-- Additional AICP package permissions on top of privapp-permissions-platform.xml -->
     <privapp-permissions package="com.aicp.extras">
         <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
     </privapp-permissions>
