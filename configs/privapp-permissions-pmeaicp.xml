@@ -9,6 +9,10 @@
         <permission name="android.permission.ACCESS_FINE_LOCATION"/>
     </privapp-permissions>
 
+    <privapp-permissions package="com.android.dialer.lookup">
+        <permission name="android.permission.WRITE_SETTINGS"/>
+    </privapp-permissions>
+
   <!-- Additional AICP package permissions on top of privapp-permissions-platform.xml -->
     <privapp-permissions package="com.aicp.extras">
         <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
