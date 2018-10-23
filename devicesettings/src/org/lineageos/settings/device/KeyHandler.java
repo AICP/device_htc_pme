@@ -24,7 +24,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.android.internal.util.aicp.DeviceKeyHandler;
+import com.android.internal.os.DeviceKeyHandler;
 
 public class KeyHandler implements DeviceKeyHandler {
 
@@ -42,18 +42,17 @@ public class KeyHandler implements DeviceKeyHandler {
         mContext.registerReceiver(mFpHomeReceiver, fpHomeFilter);
     }
 
-    @Override
-    public KeyEvent handleKeyEvent(KeyEvent event) {
+    public boolean handleKeyEvent(KeyEvent event) {
         if (!hasSetupCompleted()) {
-            return event;
+            return false;
         }
 
         if (event.getKeyCode() == KeyEvent.KEYCODE_HOME && event.getScanCode() == 143) {
             /* Consume the home keypress if not enabled */
-            return !mFpHomeEnabled ? null : event;
+            return !mFpHomeEnabled;
         }
 
-        return event;
+        return false;
     }
 
     private boolean hasSetupCompleted() {
