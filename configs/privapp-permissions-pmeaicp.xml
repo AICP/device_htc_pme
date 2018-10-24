@@ -18,5 +18,10 @@
         <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
     </privapp-permissions>
 
+    <!-- Additional device settings permissions on top of privapp-permissions-platform.xml -->
+    <privapp-permissions package="org.lineageos.settings.device">
+        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+        <permission name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    </privapp-permissions>
 </permissions>
 <!--  //~~[Feature][eyosen][[2018/10/05][PackageManager] Add Privileged Permissions -->

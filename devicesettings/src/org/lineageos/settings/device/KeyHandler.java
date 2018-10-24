@@ -24,7 +24,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.android.internal.os.DeviceKeyHandler;
+import com.android.internal.util.aicp.DeviceKeyHandler;
 
 public class KeyHandler implements DeviceKeyHandler {
 
