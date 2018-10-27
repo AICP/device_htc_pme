@@ -272,6 +272,7 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.sh \
     init.qcom.sh \
     init.qcom.firmware_links.sh \
+    init.foreground.sh \
     init.recovery.qcom.rc \
     init.target.rc \
     ueventd.qcom.rc
