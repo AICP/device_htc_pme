@@ -32,6 +32,10 @@ PRODUCT_MODEL := HTC 10
 PRODUCT_MANUFACTURER := HTC
 PRODUCT_RELEASE_NAME := pme
 
+# AICP Device Maintainers
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    DEVICE_MAINTAINERS="Ali B (eyosen)"
+
 $(call inherit-product-if-exists, vendor/htc/pme/pme-vendor.mk)
 
 # Device Fingerprint
