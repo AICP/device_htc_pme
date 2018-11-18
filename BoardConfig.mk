@@ -197,6 +197,7 @@ TARGET_RIL_VARIANT := caf
 
 # SELinux
 #-include device/aicp/sepolicy/qcom/sepolicy.mk
+-include device/qcom/sepolicy/sepolicy.mk
 # BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
 
 # SHIMS
