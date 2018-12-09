@@ -1,6 +1,6 @@
 allow hal_fingerprint_default device:chr_file { open read write };
-allow hal_fingerprint_default fingerprintd_data_file:dir { search write };
-allow hal_fingerprint_default fingerprintd_data_file:file getattr;
+allow hal_fingerprint_default fingerprintd_data_file:dir { rw_dir_perms search };
+allow hal_fingerprint_default fingerprintd_data_file:file { create_file_perms getattr };
 allow hal_fingerprint_default input_device:dir { open read search };
 allow hal_fingerprint_default input_device:chr_file { ioctl open read write };
 allow hal_fingerprint_default sysfs:file write;
