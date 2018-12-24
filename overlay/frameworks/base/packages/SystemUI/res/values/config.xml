@@ -28,6 +28,6 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_default" translatable="false">
-        wifi,bt,dnd,flashlight,rotation,battery,cell,airplane,night
+        wifi,cell,bt,location,battery,aicp_extras,flashlight,dnd,airplane
     </string>
 </resources>
