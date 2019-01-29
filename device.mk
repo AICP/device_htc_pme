@@ -206,6 +206,10 @@ PRODUCT_PACKAGES += \
     libqdMetaData.system \
     libtinyxml
 
+# Doze
+PRODUCT_PACKAGES += \
+    HTCDoze
+
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
