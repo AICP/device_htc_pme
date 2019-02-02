@@ -35,8 +35,6 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 
-import lineageos.providers.LineageSettings;
-
 public class SensorsDozeService extends Service {
 
     public static final boolean DEBUG = false;
@@ -229,7 +227,7 @@ public class SensorsDozeService extends Service {
     }
 
     private void handleOrientation() {
-        if (DEBUG) Log.d(TAG, "Orientation sensor : " + 
+        if (DEBUG) Log.d(TAG, "Orientation sensor : " +
                     "FaceDown " + mOrientationSensor.isFaceDown() +
                     ", FaceUp " + mOrientationSensor.isFaceUp() +
                     ", Vertical " + mOrientationSensor.isVertical());
@@ -316,8 +314,8 @@ public class SensorsDozeService extends Service {
                 Context.AUDIO_SERVICE);
         Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
 
-        boolean enabled = LineageSettings.System.getInt(mContext.getContentResolver(),
-                LineageSettings.System.TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK, 1) != 0;
+        boolean enabled = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK, 1) != 0;
 
         switch (audioManager.getRingerMode()) {
             case AudioManager.RINGER_MODE_SILENT:
