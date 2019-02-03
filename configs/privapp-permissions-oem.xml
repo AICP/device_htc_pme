@@ -116,5 +116,6 @@
     <privapp-permissions package="org.simalliance.openmobileapi.service">
         <permission name="android.permission.MODIFY_PHONE_STATE"/>
         <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+        <permission name="android.permission.REAL_GET_TASKS"/>
     </privapp-permissions>
 </permissions>
