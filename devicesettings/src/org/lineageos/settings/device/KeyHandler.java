@@ -42,17 +42,17 @@ public class KeyHandler implements DeviceKeyHandler {
         mContext.registerReceiver(mFpHomeReceiver, fpHomeFilter);
     }
 
-    public boolean handleKeyEvent(KeyEvent event) {
+    public KeyEvent handleKeyEvent(KeyEvent event) {
         if (!hasSetupCompleted()) {
-            return false;
+            return event;
         }
 
         if (event.getKeyCode() == KeyEvent.KEYCODE_HOME && event.getScanCode() == 143) {
             /* Consume the home keypress if not enabled */
-            return !mFpHomeEnabled;
+            return mFpHomeEnabled ? event : null;
         }
 
-        return false;
+        return event;
     }
 
     private boolean hasSetupCompleted() {
