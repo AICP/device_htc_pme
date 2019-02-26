@@ -202,6 +202,7 @@ TARGET_RIL_VARIANT := caf
 #-include device/aicp/sepolicy/qcom/sepolicy.mk
 -include device/qcom/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
+SELINUX_IGNORE_NEVERALLOWS := true
 
 # SHIMS
 TARGET_LD_SHIM_LIBS := \
