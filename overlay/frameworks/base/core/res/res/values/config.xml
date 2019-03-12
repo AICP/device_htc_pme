@@ -420,4 +420,7 @@
 
     <!-- Audio panel view placement. Is left side enabled -->
     <bool name="config_audioPanelOnLeftSide">true</bool>
+
+    <!-- Blank the display when transitioning from dozing to non-dozing state -->
+    <bool name="config_displayBlanksAfterDoze">false</bool>
 </resources>
