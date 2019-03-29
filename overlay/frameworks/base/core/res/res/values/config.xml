@@ -423,4 +423,8 @@
 
     <!-- Blank the display when transitioning from dozing to non-dozing state -->
     <bool name="config_displayBlanksAfterDoze">false</bool>
+
+    <!-- Check proximity sensor on wake -->
+    <bool name="config_proximityCheckOnWake">true</bool>
+    <bool name="config_proximityCheckOnWakeEnabledByDefault">false</bool>
 </resources>
