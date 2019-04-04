@@ -42,4 +42,10 @@
 
     <!-- Show Preferred Network Type options in No SIM case -->
     <bool name="config_no_sim_display_network_modes">true</bool>
+
+    <!-- Flag indicating if network query through TelephonyManager.requestNetworkScan() should be
+         disabled.
+         If set to true, it will send network query through Phone.getAvailableNetworks() directly
+         rather than attempt to query through TelephonyManager.requestNetworkScan() first. -->
+    <bool name="config_requestNetworkScan_disable">true</bool>
 </resources>
