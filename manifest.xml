@@ -313,30 +313,12 @@
         </interface>
     </hal>
     <hal format="hidl">
-        <name>com.qualcomm.qti.ant</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IAntHci</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="hidl">
         <name>com.qualcomm.qti.bluetooth_audio</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
         <interface>
             <name>IBluetoothAudio</name>
             <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="hidl">
-        <name>com.qualcomm.qti.dpm.api</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IdpmQmi</name>
-            <instance>dpmQmiService</instance>
         </interface>
     </hal>
     <hal format="hidl">
@@ -430,15 +412,6 @@
         <version>1.0</version>
         <interface>
             <name>INxpEse</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="hidl">
-        <name>vendor.qti.hardware.alarm</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IAlarm</name>
             <instance>default</instance>
         </interface>
     </hal>
