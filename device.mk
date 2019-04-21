@@ -159,6 +159,7 @@ PRODUCT_PACKAGES += \
     SnapdragonCamera \
     libshim_camera \
     libshim_stillmore \
+    libshim_ppe \
     libion
 
 PRODUCT_PACKAGES += \
