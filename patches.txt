@@ -1,0 +1,2 @@
+# fixes camcorder temporarily after Aug ASB merge
+93112/1 https://gerrit.aicp-rom.com frameworks/av
