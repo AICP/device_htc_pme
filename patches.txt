@@ -1,4 +1,2 @@
 # fixes camcorder temporarily after Aug ASB merge
 93112/1 https://gerrit.aicp-rom.com frameworks/av
-# needed patch for august ASB's to get compiled
-252619/2 https://review.lineageos.org vendor/qcom/opensource/audio
